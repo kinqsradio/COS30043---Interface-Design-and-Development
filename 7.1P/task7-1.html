@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requesting External Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="container mt-4">
+        <h1>External Data Request</h1>
+        <p>Fetching data from <a href="https://jsonplaceholder.typicode.com/posts" target="_blank">Json Placeholder</a></p>
+
+        <button class="btn btn-primary mb-3" @click="fetchData">Fetch Data</button>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="post in posts" :key="post.id">
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.title }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/task7-1.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            font-size: 16px;
+            width: 300px;
+            margin-top: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>String Test</h1>
+        <!-- Input Field -->
+        <p>Please enter your name:</p>
+        <input type="text" v-model="strName" placeholder="Enter your name" />
+
+        <!-- Conditional Output -->
+        <p v-show="strName.toLowerCase() === 'anh'.toLowerCase()">Awesome name!</p>
+        <p v-show="strName && strName.toLowerCase() !== 'anh'.toLowerCase()">{{ strName }} is not my name!</p>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                strName: '' // Model to store the name
+            }
+        });
+    </script>
+</body>
+</html>

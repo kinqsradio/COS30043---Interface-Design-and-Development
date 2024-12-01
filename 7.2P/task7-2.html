@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieve Data from JSON</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="container mt-4">
+        <h1>Units Data</h1>
+        <p>Retrieving data from <strong>7.2 units.json</strong></p>
+
+        <button class="btn btn-primary mb-3" @click="fetchData">Load Data</button>
+
+        <table class="table table-striped" v-if="units.length > 0">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Description</th>
+                    <th>Credit Points</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="unit in units" :key="unit.code">
+                    <td>{{ unit.code }}</td>
+                    <td>{{ unit.desc }}</td>
+                    <td>{{ unit.cp }}</td>
+                    <td>{{ unit.type }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p v-else>No data available. Click "Load Data" to fetch.</p>
+    </div>
+
+    <script src="js/task7-2.js"></script>
+</body>
+</html>

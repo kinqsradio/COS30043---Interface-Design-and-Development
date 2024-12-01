@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compute App</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+            font-size: 16px;
+            width: 100px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Compute App</h1>
+        <form>
+            <!-- Input for weight -->
+            <p>
+                <label for="weight">Enter weight in kilograms:</label>
+                <input type="number" id="weight" v-model.number="numWt" placeholder="Weight">
+            </p>
+
+            <!-- Input for height -->
+            <p>
+                <label for="height">Enter height in centimetres:</label>
+                <input type="number" id="height" v-model.number="numHt" placeholder="Height">
+            </p>
+
+            <!-- Computed BMI -->
+            <p v-if="bmi > 0">
+                Computed BMI is: {{ bmi.toFixed(2) }} {{ bmiCategory }}
+            </p>
+        </form>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                numWt: 0, // Weight in kilograms
+                numHt: 0  // Height in centimetres
+            },
+            computed: {
+                bmi() {
+                    if (this.numHt > 0) {
+                        const heightInMeters = this.numHt / 100;
+                        return this.numWt / (heightInMeters * heightInMeters);
+                    }
+                    return 0;
+                },
+                bmiCategory() {
+                    if (this.bmi < 18.5) return "Underweight";
+                    if (this.bmi >= 18.5 && this.bmi < 25) return "Normal";
+                    if (this.bmi >= 25 && this.bmi < 30) return "Overweight";
+                    if (this.bmi >= 30) return "Obese";
+                    return "";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
