@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Marks Table</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuejs-paginate@2.1.0"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+</head>
+<body>
+  <div id="app" class="container mt-5">
+    <h2>Student Marks</h2>
+    <table class="table table-striped table-bordered">
+      <caption>List of student marks</caption>
+      <thead class="thead-dark">
+        <tr>
+          <th id="name-header" scope="col">Student Name</th>
+          <th id="mark-header" scope="col">Marks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="student in paginatedData" :key="student.name">
+          <td headers="name-header">{{ student.name }}</td>
+          <td headers="mark-header">{{ student.mark }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <paginate
+      :page-count="pageCount"
+      :click-handler="handlePageChange"
+      :prev-text="'Prev Page'"
+      :next-text="'Next Page'"
+      :container-class="'pagination'"
+      :page-class="'page-item'"
+      :page-link-class="'page-link'"
+      :prev-class="'page-item'"
+      :prev-link-class="'page-link'"
+      :next-class="'page-item'"
+      :next-link-class="'page-link'"
+      :active-class="'active'"
+    ></paginate>
+  </div>
+
+  <script>
+    new Vue({
+      el: "#app",
+      components: {
+        paginate: VuejsPaginate,
+      },
+      data: {
+        studMarks: [
+          { name: "Amy", mark: 90 },
+          { name: "Bill", mark: 80 },
+          { name: "Casey", mark: 78 },
+          { name: "David", mark: 84 },
+          { name: "Eve", mark: 72 },
+          { name: "Frank", mark: 88 },
+          { name: "Grace", mark: 95 },
+          { name: "Hank", mark: 67 },
+          { name: "Ivy", mark: 91 },
+          { name: "Jack", mark: 73 },
+          { name: "Kate", mark: 85 },
+          { name: "Leo", mark: 77 },
+          { name: "Mia", mark: 89 },
+          { name: "Nina", mark: 92 },
+          { name: "Oscar", mark: 84 },
+          { name: "Paul", mark: 76 },
+          { name: "Quinn", mark: 88 },
+          { name: "Rose", mark: 94 },
+          { name: "Sam", mark: 81 },
+          { name: "Tina", mark: 79 },
+          { name: "Uma", mark: 83 },
+          { name: "Victor", mark: 86 },
+          { name: "Wendy", mark: 87 },
+          { name: "Xander", mark: 82 },
+          { name: "Yara", mark: 75 },
+          { name: "Zane", mark: 80 },
+        ],
+        currentPage: 1,
+        perPage: 3,
+      },
+      computed: {
+        pageCount() {
+          return Math.ceil(this.studMarks.length / this.perPage);
+        },
+        paginatedData() {
+          const start = (this.currentPage - 1) * this.perPage;
+          const end = start + this.perPage;
+          return this.studMarks.slice(start, end);
+        },
+      },
+      methods: {
+        handlePageChange(page) {
+          this.currentPage = page;
+        },
+      },
+    });
+  </script>
+</body>
+</html>
