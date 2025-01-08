@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Expense Tracker</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="./index.html"> Basic Expense Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="./index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container mt-4">
+        <!-- Expense Form -->
+        <section id="expense-form" class="mb-4">
+            <h2 class="h4 mb-3 text-center">Add Expense</h2>
+            <form id="expenseForm">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" id="date" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="category" class="form-label">Category</label>
+                        <select id="category" class="form-select" required>
+                            <option value="">Select Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Utilities">Utilities</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" id="amount" class="form-control" placeholder="0.00" required>
+                    </div>
+                </div>
+                <div class="mt-3 text-center">
+                    <button type="submit" class="btn btn-success">Add Expense</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Expense Chart -->
+        <section id="expense-chart" class="mb-4">
+            <h2 class="h4 mb-3 text-center">Spending Chart</h2>
+            <div class="chart-container">
+                <canvas id="spendingChart" width="100%" height="50"></canvas>
+            </div>
+        </section>
+
+        <!-- Expense Table -->
+        <section id="expense-table">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h4 mb-0">Expense List</h2>
+                <div>
+                    <!-- there is a bug here do not remove id importcsv otherwise code will break lol -->
+                    <div id="importCsv"></div> 
+                    <button class="btn btn-primary" id="exportCsv">Export CSV</button>
+                </div>
+            </div>
+            <table class="table" id="expensesTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <p class="text-muted">&copy; 2025 Tran Duc Anh Dang - Basic Expense Tracker. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- JavaScript Modules -->
+    <script type="module" src="./assets/js/app.js"></script>
+</body>
+</html>

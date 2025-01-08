@@ -1,0 +1,25 @@
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    background-color: var(--light-gray);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px;
+    background: var(--white);
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+}
+
+h1, h2, h3, h4 {
+    font-weight: bold;
+    color: var(--dark-gray);
+}
+
+.text-center {
+    text-align: center;
+}

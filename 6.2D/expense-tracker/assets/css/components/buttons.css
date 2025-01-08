@@ -1,0 +1,25 @@
+/* Primary Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 8px 20px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Secondary Buttons */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 8px 20px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}

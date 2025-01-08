@@ -1,0 +1,16 @@
+/* Chart Section */
+#expense-chart {
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* Chart Canvas */
+#spendingChart {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+}

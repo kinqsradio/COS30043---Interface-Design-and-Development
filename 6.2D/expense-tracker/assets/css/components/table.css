@@ -1,0 +1,42 @@
+/* Expense Table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--white);
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+}
+
+.table th {
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.table tr:nth-child(even) {
+    background-color: var(--light-gray);
+}
+
+/* Action Buttons */
+.table .btn {
+    border-radius: var(--border-radius);
+    padding: 5px 10px;
+}
+
+.table .btn-danger {
+    background-color: var(--danger-color);
+    color: var(--white);
+    border: none;
+}
+
+.table .btn-danger:hover {
+    background-color: #c82333;
+}
