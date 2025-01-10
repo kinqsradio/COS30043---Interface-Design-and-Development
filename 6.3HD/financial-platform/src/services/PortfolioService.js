@@ -1,52 +1,50 @@
-const STORAGE_KEY = 'userPortfolio';
-
 const PortfolioService = {
   /**
-   * Retrieve the user's portfolio from local storage.
-   * @returns {Array} Portfolio data or an empty array if none exists.
+   * Get all portfolios from local storage.
+   * @returns {Object} An object with portfolio names as keys and their entries as values.
    */
-  getPortfolio() {
-    const portfolio = localStorage.getItem(STORAGE_KEY);
-    return portfolio ? JSON.parse(portfolio) : [];
+  getAllPortfolios() {
+    const portfolios = localStorage.getItem("allPortfolios");
+    return portfolios ? JSON.parse(portfolios) : {};
   },
 
   /**
-   * Save the portfolio to local storage.
-   * @param {Array} portfolio - Array of portfolio entries.
+   * Save all portfolios to local storage.
+   * @param {Object} portfolios - Object containing all portfolios.
    */
-  savePortfolio(portfolio) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolio));
+  saveAllPortfolios(portfolios) {
+    localStorage.setItem("allPortfolios", JSON.stringify(portfolios));
   },
 
   /**
-   * Add a new entry to the portfolio.
-   * @param {Object} entry - The portfolio entry to add.
+   * Retrieve a specific portfolio by name.
+   * @param {string} name - The name of the portfolio.
+   * @returns {Array} Portfolio entries or an empty array if not found.
    */
-  addEntry(entry) {
-    const portfolio = this.getPortfolio();
-    portfolio.push(entry);
-    this.savePortfolio(portfolio);
+  getPortfolio(name) {
+    const portfolios = this.getAllPortfolios();
+    return portfolios[name] || [];
   },
 
   /**
-   * Delete an entry from the portfolio by index.
-   * @param {number} index - The index of the entry to delete.
+   * Save a specific portfolio by name.
+   * @param {string} name - The name of the portfolio.
+   * @param {Array} portfolio - The portfolio entries to save.
    */
-  deleteEntry(index) {
-    const portfolio = this.getPortfolio();
-    portfolio.splice(index, 1);
-    this.savePortfolio(portfolio);
+  savePortfolio(name, portfolio) {
+    const portfolios = this.getAllPortfolios();
+    portfolios[name] = portfolio;
+    this.saveAllPortfolios(portfolios);
   },
 
   /**
-   * Update an entry in the portfolio.
-   * @param {number} index - The index of the entry to update.
-   * @param {Object} updatedEntry - The updated portfolio entry.
+   * Delete a portfolio by name.
+   * @param {string} name - The name of the portfolio to delete.
    */
-  updateEntry(index, updatedEntry) {
-    const portfolio = this.getPortfolio();
-    portfolio[index] = updatedEntry;
-    this.savePortfolio(portfolio);
+  deletePortfolio(name) {
+    const portfolios = this.getAllPortfolios();
+    delete portfolios[name];
+    this.saveAllPortfolios(portfolios);
   },
 };
 

@@ -1,102 +1,74 @@
 <template>
-  <div>
-    <h1>Dashboard</h1>
+  <div class="container py-4">
+    <h1 class="text-center mb-4">Market Overview</h1>
 
-    <!-- Section: Top Gainers and Losers -->
-    <section>
-      <h2>Top Gainers and Losers</h2>
-      <div v-if="topGainersLosers">
-        <p><strong>Top Gainer:</strong> {{ topGainersLosers.gainers?.[0]?.ticker || 'N/A' }} - ${{ topGainersLosers.gainers?.[0]?.price || 'N/A' }}</p>
-        <p><strong>Top Loser:</strong> {{ topGainersLosers.losers?.[0]?.ticker || 'N/A' }} - ${{ topGainersLosers.losers?.[0]?.price || 'N/A' }}</p>
-        <p><strong>Most Active:</strong> {{ topGainersLosers.active?.[0]?.ticker || 'N/A' }} - ${{ topGainersLosers.active?.[0]?.price || 'N/A' }}</p>
-      </div>
-      <p v-else>Loading top gainers and losers...</p>
-    </section>
+    <!-- Category Selection Buttons -->
+    <div class="d-flex justify-content-center flex-wrap mb-4">
+      <button
+        v-for="category in categories"
+        :key="category.key"
+        @click="selectCategory(category.key)"
+        :class="['btn', 'btn-lg', 'me-2', 'mb-2', selectedCategory === category.key ? 'btn-primary' : 'btn-outline-primary']"
+      >
+        {{ category.label }}
+      </button>
+    </div>
 
-    <!-- Section: Real-Time Stock Quotes -->
-    <section>
-      <h2>Real-Time Stock Quotes</h2>
-      <div v-if="stockQuotes.length">
-        <div v-for="quote in stockQuotes" :key="quote.symbol">
-          <p><strong>{{ quote.symbol }}</strong>: ${{ quote.price }} ({{ quote.change }}%)</p>
-        </div>
-      </div>
-      <p v-else>Loading stock quotes...</p>
-    </section>
+    <!-- Data Table -->
+    <div class="table-responsive">
+      <dashboard-stats
+        v-if="selectedData.length"
+        :data="selectedData"
+        :defaultSortKey="getDefaultSortKey"
+        :defaultSortDir="'desc'"
+      />
 
-    <!-- Section: Dashboard Stats -->
-    <section>
-      <h2>Dashboard Statistics</h2>
-      <div>
-        <p><strong>Total Gainers:</strong> {{ topGainersLosers.gainers?.length || 0 }}</p>
-        <p><strong>Total Losers:</strong> {{ topGainersLosers.losers?.length || 0 }}</p>
-        <p><strong>Total Active Stocks:</strong> {{ topGainersLosers.active?.length || 0 }}</p>
-      </div>
-    </section>
+      <p v-else class="text-center text-muted">Loading data...</p>
+    </div>
   </div>
 </template>
 
 <script>
-import StockService from '@/services/StockService';
+import { mapState, mapActions, mapGetters } from "vuex";
+import DashboardStats from "@/components/DashboardStats.vue";
 
 export default {
-  name: 'DashboardPage',
+  name: "DashboardPage",
+  components: {
+    DashboardStats,
+  },
   data() {
     return {
-      topGainersLosers: {
-        gainers: [],
-        losers: [],
-        active: [],
-      },
-      stockQuotes: [],
+      categories: [
+        { key: "gainers", label: "Top Gainers" },
+        { key: "losers", label: "Top Losers" },
+        { key: "active", label: "Most Active" },
+      ],
     };
   },
-  async created() {
-    // Fetch top gainers/losers
-    this.fetchTopGainersLosers();
-
-    // Fetch real-time stock quotes for predefined symbols
-    this.fetchStockQuotes(['AAPL', 'GOOGL', 'MSFT']); // Example symbols
+  computed: {
+    ...mapState("dashboard", ["selectedCategory"]),
+    ...mapGetters("dashboard", ["selectedData"]),
+    getDefaultSortKey() {
+      if (this.selectedCategory === "gainers" || this.selectedCategory === "losers") {
+        return "changePercentage";
+      } else if (this.selectedCategory === "active") {
+        return "volume";
+      }
+      return "ticker";
+    },
   },
   methods: {
-    async fetchTopGainersLosers() {
-      try {
-        const data = await StockService.getTopGainersLosers();
-
-        // Assign the correct data structure
-        this.topGainersLosers = {
-          gainers: data.top_gainers || [],
-          losers: data.top_losers || [],
-          active: data.most_actively_traded || [],
-        };
-
-        console.log('Parsed Top Gainers, Losers, and Active Tickers:', this.topGainersLosers);
-      } catch (error) {
-        console.error('Error fetching top gainers/losers:', error.message);
-        this.topGainersLosers = { gainers: [], losers: [], active: [] };
-      }
+    ...mapActions("dashboard", ["fetchTopGainersLosers"]),
+    selectCategory(category) {
+      this.$store.commit("dashboard/setSelectedCategory", category);
     },
-    async fetchStockQuotes(symbols) {
-      try {
-        const quotes = await Promise.all(
-          symbols.map(async (symbol) => {
-            const data = await StockService.getGlobalQuote(symbol);
-            return {
-              symbol: data['Global Quote']['01. symbol'],
-              price: data['Global Quote']['05. price'],
-              change: data['Global Quote']['10. change percent'],
-            };
-          })
-        );
-        this.stockQuotes = quotes;
-      } catch (error) {
-        console.error('Error fetching stock quotes:', error.message);
-      }
-    },
+  },
+  async created() {
+    await this.fetchTopGainersLosers();
   },
 };
 </script>
 
-<style>
-/* Add any necessary styles here */
-</style>
+
+<style src="../styles/dashboard.css"></style>

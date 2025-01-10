@@ -40,11 +40,18 @@ src/
 │   └── DefaultLayout.vue      # Layout wrapper for all pages
 ├── router/                # Vue Router configuration
 │   └── index.js               # Routing for all pages
+├── scripts/                
+│   └── tableSorting.js               # Sort DashboardStats stock tables
 ├── services/              # Logic for local storage and APIs
 │   ├── ApiService.js          # Fetch data from APIs (e.g., Alpha Vantage)
 │   ├── PortfolioService.js    # Manage portfolio in Local Storage
-│   └── SearchService.js       # Handle search functionality
+│   ├── SearchService.js       # Handle search functionality
 │   └── StockService.js         # Stock data (e.g., intraday) API logic
+├── models/              # Models for API response
+│   ├── GlobalQuoteModel.js          
+│   ├── SymbolSearchModel.js    
+│   ├── TimeSeriesDailyModel.js       
+│   └── TopGainersLosersModels.js         
 │
 ├── store/                 # Vuex state management
 │   ├── index.js              # Vuex store setup
@@ -61,6 +68,8 @@ src/
 ├── main.js                # Application entry point
 └── styles/                # Global CSS/SCSS styles
     ├── global.css            # General styles
+    ├── dashboard.css            
+    ├── tables.css            
     └── variables.css         # CSS variables for theming
 ```
 
@@ -68,14 +77,9 @@ src/
 
 | **Endpoint**             | **Function**                          | **Purpose**                                                                                      | **Used In**               |
 |---------------------------|----------------------------------------|--------------------------------------------------------------------------------------------------|---------------------------|
-| `TIME_SERIES_INTRADAY`    | Real-time intraday stock prices       | Fetch minute-by-minute stock price updates.                                                     | **Dashboard**, **Charts** |
 | `TIME_SERIES_DAILY`       | Daily stock data                     | Fetch daily stock prices to display historical data and trends.                                 | **Portfolio**, **Charts** |
-| `TIME_SERIES_WEEKLY`      | Weekly stock data                    | Fetch weekly stock prices for long-term trends.                                                 | **Charts**                |
-| `TIME_SERIES_MONTHLY`     | Monthly stock data                   | Fetch monthly stock prices for long-term trends.                                                | **Charts**                |
 | `GLOBAL_QUOTE`            | Real-time stock quote                | Fetch the latest stock price, volume, and percentage changes.                                   | **Portfolio** |
 | `SYMBOL_SEARCH`           | Search for stocks                    | Enable users to search for stocks by name or ticker symbol.                                     | **Search**                |
-| `OVERVIEW`                | Company fundamentals                 | Fetch company information such as market cap, sector, and description.                          | **Search**                |
-| `EARNINGS`                | Earnings data                       | Retrieve quarterly earnings data for financial insights.                                        | **Search**, **Dashboard** |
 | `TOP_GAINERS_LOSERS`      | Market trends                        | Fetch top gainers, losers, and most active tickers for the US market.                           | **Dashboard**             |
 
 ---
@@ -96,14 +100,11 @@ src/
 #### **3. Search**
 - **Endpoints**:
   - `SYMBOL_SEARCH`: To search stocks by name or ticker.
-- **Purpose**: Allow users to find stocks and view company fundamentals.
+- **Purpose**: Allow users to find stocks.
 
 #### **4. Charts**
 - **Endpoints**:
-  - `TIME_SERIES_INTRADAY`: For short-term trends and real-time data visualization.
   - `TIME_SERIES_DAILY`: For daily trends.
-  - `TIME_SERIES_WEEKLY`: For weekly trends.
-  - `TIME_SERIES_MONTHLY`: For long-term trends.
 - **Purpose**: Visualize stock performance trends over various timeframes.
 
 ---
@@ -112,9 +113,9 @@ src/
 
 | **View/Component**       | **Endpoints Used**                                                                 |
 |---------------------------|------------------------------------------------------------------------------------|
-| **Dashboard**            | `GLOBAL_QUOTE`, `EARNINGS`, `NEWS_SENTIMENT`, `TOP_GAINERS_LOSERS`                 |
+| **Dashboard**            | `TOP_GAINERS_LOSERS`                 |
 | **Portfolio**            | `GLOBAL_QUOTE`, `TIME_SERIES_DAILY`                                                |
-| **Search**               | `SYMBOL_SEARCH`, `OVERVIEW`                                                        |
-| **Charts**               | `TIME_SERIES_INTRADAY`, `TIME_SERIES_DAILY`, `TIME_SERIES_WEEKLY`, `TIME_SERIES_MONTHLY` |
+| **Search**               | `SYMBOL_SEARCH`                                                        |
+| **Charts**               | `TIME_SERIES_DAILY` |
 
 ---

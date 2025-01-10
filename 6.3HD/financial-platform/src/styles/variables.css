@@ -1,0 +1,13 @@
+:root {
+    --color-primary: #007bff;
+    --color-primary-hover: #0056b3;
+    --color-positive: #28a745;
+    --color-negative: #dc3545;
+    --color-border: #ddd;
+    --color-background: #f9f9f9;
+    --font-family: "Roboto", Arial, sans-serif;
+    --font-size-base: 16px;
+    --table-header-bg: #f4f4f4;
+    --table-hover-bg: #e9ecef;
+  }
+  

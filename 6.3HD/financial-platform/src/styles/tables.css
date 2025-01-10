@@ -1,0 +1,67 @@
+.table-container {
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+thead th {
+  cursor: pointer;
+  padding: 0.75rem;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+thead th:hover {
+  color: #007bff;
+}
+
+tbody td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.positive {
+  color: #28a745; /* Green for positive values */
+}
+
+.negative {
+  color: #dc3545; /* Red for negative values */
+}
+
+.icon-up::after {
+  content: "▲";
+  font-size: 0.75rem;
+  color: #007bff;
+  margin-left: 4px;
+}
+
+.icon-down::after {
+  content: "▼";
+  font-size: 0.75rem;
+  color: #007bff;
+  margin-left: 4px;
+}
