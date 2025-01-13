@@ -1,18 +1,35 @@
 <template>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Symbol</th>
-            <th>Average Purchase Price</th>
-            <th>Total Shares</th>
-            <th>Current Price</th>
-            <th>Unrealized Gain/Loss</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(entry, index) in portfolio" :key="entry.symbol">
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <!-- Clickable headers to trigger sorting -->
+          <th @click="onHeaderClick('symbol')">
+            Symbol
+            <span :class="headerArrowClass('symbol')"></span>
+          </th>
+          <th @click="onHeaderClick('price')">
+            Average Purchase Price
+            <span :class="headerArrowClass('price')"></span>
+          </th>
+          <th @click="onHeaderClick('shares')">
+            Total Shares
+            <span :class="headerArrowClass('shares')"></span>
+          </th>
+          <th @click="onHeaderClick('currentPrice')">
+            Current Price
+            <span :class="headerArrowClass('currentPrice')"></span>
+          </th>
+          <th>Unrealized Gain/Loss</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Single template v-for to avoid ESLint issues -->
+        <template v-for="(entry, index) in portfolio" :key="entry.symbol">
+          <!-- Main row for the stock -->
+          <!-- Clicking anywhere on the row toggles the chart -->
+          <tr @click="toggleChart(entry.symbol)" class="clickable-row">
             <td>{{ entry.symbol }}</td>
             <td>{{ entry.price.toFixed(2) }}</td>
             <td>{{ entry.shares }}</td>
@@ -21,49 +38,26 @@
               {{ calculateGainLoss(entry) }}
             </td>
             <td>
-              <button @click="sellShares(index)">Sell</button>
+              <!-- Stop row click when user clicks Sell -->
+              <button @click.stop="sellShares(index)">Sell</button>
             </td>
           </tr>
-        </tbody>
-      </table>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "PortfolioTable",
-    props: {
-      portfolio: {
-        type: Array,
-        required: true,
-      },
-    },
-    emits: ["sell"],
-    methods: {
-      /**
-       * Emit the sell action to the parent component.
-       */
-      sellShares(index) {
-        this.$emit("sell", index);
-      },
-      /**
-       * Calculate unrealized gain or loss for a stock.
-       */
-      calculateGainLoss(entry) {
-        if (!entry.currentPrice) return "Loading...";
-        const gainLoss = (entry.currentPrice - entry.price) * entry.shares;
-        return `$${gainLoss.toFixed(2)}`;
-      },
-      /**
-       * Get the class for positive or negative gain/loss.
-       */
-      getGainLossClass(entry) {
-        const gainLoss = (entry.currentPrice - entry.price) * entry.shares;
-        return gainLoss >= 0 ? "positive" : "negative";
-      },
-    },
-  };
-  </script>
-  
-  <style scoped src="../styles/tables.css"></style>
-  
+
+          <!-- Conditionally show the chart row if we have data for this symbol -->
+          <tr v-if="chartDataMap[entry.symbol]">
+            <td colspan="6">
+              <!-- StockChart component, fed from chartDataMap -->
+              <StockChart
+                :symbol="entry.symbol"
+                :chartData="chartDataMap[entry.symbol]"
+              />
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script src="@/scripts/portfolioTable"></script>
+<style scoped src="@/styles/tables.css"></style>

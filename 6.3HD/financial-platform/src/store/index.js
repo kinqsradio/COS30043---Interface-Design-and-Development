@@ -1,9 +1,12 @@
+// store/index.js
 import { createStore } from "vuex";
-import dashboard from "./modules/dashboard"; // Ensure this path points to src/store/modules/dashboard.js
+import dashboard from "./modules/dashboard";
+import portfolio from "./modules/portfolio"; 
 
 const store = createStore({
   modules: {
-    dashboard, // Register the dashboard Vuex module
+    dashboard,
+    portfolio,
   },
 });
 

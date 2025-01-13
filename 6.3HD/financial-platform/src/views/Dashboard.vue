@@ -69,6 +69,4 @@ export default {
   },
 };
 </script>
-
-
-<style src="../styles/dashboard.css"></style>
+<style src="@/styles/dashboard.css"></style>

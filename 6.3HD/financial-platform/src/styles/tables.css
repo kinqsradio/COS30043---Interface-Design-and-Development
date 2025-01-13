@@ -1,4 +1,8 @@
 .table-container {
+  /* Center the table container within its parent */
+  display: flex;
+  justify-content: center;
+
   overflow-x: auto;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -7,12 +11,17 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Ensure the table also doesn’t exceed its container’s width */
 table {
+  /* Keep the table from exceeding its container width and center text */
   width: 100%;
+  max-width: 100%; 
+  margin: 0 auto; 
   border-collapse: collapse;
-  text-align: left;
+  text-align: center; /* Central text alignment for all cells */
 }
 
+/* Table headers */
 thead th {
   cursor: pointer;
   padding: 0.75rem;
@@ -21,21 +30,27 @@ thead th {
   border-bottom: 2px solid #ddd;
   text-transform: uppercase;
   font-size: 0.875rem;
+  /* Ensure headers are also centered */
+  text-align: center;
 }
 
 thead th:hover {
   color: #007bff;
 }
 
+/* Table body cells */
 tbody td {
   padding: 0.75rem;
   border-bottom: 1px solid #eee;
+  text-align: center; /* Center columns */
 }
 
+/* Highlight row on hover */
 tbody tr:hover {
   background-color: #f9f9f9;
 }
 
+/* Zebra striping */
 tbody tr:nth-child(even) {
   background-color: #f8f8f8;
 }
@@ -44,14 +59,16 @@ tbody tr:nth-child(odd) {
   background-color: #fff;
 }
 
+/* Positive and negative classes for gain/loss */
 .positive {
-  color: #28a745; /* Green for positive values */
+  color: #28a745; /* Green */
 }
 
 .negative {
-  color: #dc3545; /* Red for negative values */
+  color: #dc3545; /* Red */
 }
 
+/* Up/down arrow icons */
 .icon-up::after {
   content: "▲";
   font-size: 0.75rem;
@@ -64,4 +81,11 @@ tbody tr:nth-child(odd) {
   font-size: 0.75rem;
   color: #007bff;
   margin-left: 4px;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+.clickable-row:hover {
+  background-color: #f7f7f7; /* highlight */
 }

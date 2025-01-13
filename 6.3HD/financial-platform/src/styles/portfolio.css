@@ -1,34 +1,179 @@
 .portfolio {
-    padding: 20px;
+padding: 20px;
+}
+
+.portfolio-top-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+}
+
+/* Place portfolio table and overview side by side */
+.portfolio-bottom-row {
+display: flex;
+align-items: flex-start;  
+gap: 20px;
+}
+
+.portfolio-table-container {
+flex: 3; /* Or whatever ratio you prefer */
+}
+
+.portfolio-overview {
+flex: 1;
+background-color: #f9f9f9;
+border: 1px solid #ddd;
+padding: 16px;
+border-radius: 4px;
+align-self: flex-start; 
+}
+  
+
+/* Make the numbers stand out */
+.portfolio-overview h3 {
+margin-top: 0;
+margin-bottom: 12px;
+}
+
+/* Metrics layout */
+.portfolio-metrics {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.metric {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.metric-label {
+font-weight: bold;
+color: #555;
+}
+
+.metric-value {
+font-size: 1.1em;
+color: #333;
 }
 
 .search-results,
 .portfolio-table {
-    margin-top: 20px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
+margin-top: 20px;
 }
 
 th,
 td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+padding: 10px;
+text-align: left;
+border: 1px solid #ddd;
 }
 
 button {
-    padding: 5px 10px;
-    margin-right: 5px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+padding: 5px 10px;
+margin-right: 5px;
+background-color: #007bff;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+background-color: #0056b3;
 }
+  
+
+/* Search Results */
+.search-results-list {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+/* Each item is a flex container with symbol+name on the left, button on the right. */
+.search-result-item {
+display: flex;
+justify-content: space-between; 
+align-items: center;
+background-color: #fefefe;
+border: 1px solid #ddd;
+padding: 10px;
+border-radius: 4px;
+margin-bottom: 8px;
+}
+
+/* Container for symbol and name */
+.search-details {
+display: flex;
+flex-direction: column;
+}
+
+/* Symbol stands out more */
+.search-symbol {
+font-weight: bold;
+margin-bottom: 4px;
+}
+
+/* Slightly smaller or lighter color for the name */
+.search-company {
+color: #666;
+font-size: 0.9em;
+}
+
+/* Portfolio Management Container */
+.portfolio-management {
+display: flex;
+flex-wrap: wrap; /* allows wrapping on smaller screens */
+align-items: center;
+gap: 10px;         /* space between label/select/buttons */
+background-color: #f2f2f2;
+padding: 12px;
+border-radius: 6px;
+margin-bottom: 1rem; /* spacing below the container */
+}
+
+/* Group label and select together */
+.portfolio-select-group {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.portfolio-select-group label {
+font-weight: bold;
+color: #333;
+}
+
+/* Style the dropdown */
+.portfolio-select-group select {
+padding: 6px 8px;
+border: 1px solid #ccc;
+border-radius: 4px;
+font-size: 0.9rem;
+cursor: pointer;
+}
+
+/* Keep the buttons in another flex container if you want them side by side */
+.portfolio-buttons {
+display: flex;
+gap: 10px;
+}
+
+/* Button styling (consistent with the rest of your app) */
+.portfolio-management button {
+background-color: #007bff;
+color: #fff;
+border: none;
+border-radius: 4px;
+padding: 6px 12px;
+cursor: pointer;
+font-size: 0.9rem;
+}
+
+.portfolio-management button:hover {
+background-color: #0056b3;
+}
+  

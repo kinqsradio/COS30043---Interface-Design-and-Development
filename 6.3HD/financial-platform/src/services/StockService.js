@@ -4,7 +4,7 @@ import GlobalQuoteModel from '@/models/GlobalQuoteModel';
 import SymbolSearchModel from '@/models/SymbolSearchModel';
 import TopGainersLosersModel from '@/models/TopGainersLosersModel';
 
-const API_KEY = 'demo';
+const API_KEY = 'B5X8ZE7X305K32L3';
 // 'B5X8ZE7X305K32L3'
 // 'OO1L6GN27CG5A9H0';
 
