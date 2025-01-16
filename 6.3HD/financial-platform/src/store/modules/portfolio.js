@@ -1,4 +1,3 @@
-// store/modules/portfolio.js
 import PortfolioService from "@/services/PortfolioService";
 import StockService from "@/services/StockService";
 
@@ -22,6 +21,7 @@ export default {
       state.portfolioNames = names;
     },
     SET_SELECTED_PORTFOLIO(state, portfolioName) {
+      console.log("Setting selected portfolio:", portfolioName);
       state.selectedPortfolio = portfolioName;
     },
     SET_PORTFOLIO(state, portfolioData) {
@@ -68,28 +68,39 @@ export default {
      */
     loadPortfolio({ state, commit, dispatch }) {
       if (!state.selectedPortfolio) return;
-
-      const portfolioData = PortfolioService.getPortfolio(state.selectedPortfolio);
-      commit("SET_PORTFOLIO", portfolioData);
-
+    
+      const portfolios = PortfolioService.getAllPortfolios();
+      const selectedPortfolio = portfolios[state.selectedPortfolio] || { entries: [], realizedProfit: 0 };
+    
+      // Ensure entries is always an array
+      const portfolioEntries = Array.isArray(selectedPortfolio.entries) ? selectedPortfolio.entries : [];
+    
+      commit("SET_PORTFOLIO", portfolioEntries);
+      commit("SET_REALIZED_PROFIT", selectedPortfolio.realizedProfit);
+    
       // Update current price for each entry
-      portfolioData.forEach((entry, index) => {
+      portfolioEntries.forEach((entry, index) => {
         dispatch("updateCurrentPrice", { symbol: entry.symbol, index });
       });
     },
+    
 
     setSelectedPortfolio({ commit }, portfolioName) {
+      console.log("SET_SELECTED_PORTFOLIO", portfolioName)
       commit("SET_SELECTED_PORTFOLIO", portfolioName);
     },
 
     createPortfolio({ state, commit }, name) {
       if (name && !state.portfolioNames.includes(name)) {
-        // Create an empty portfolio in the service
+        // Create an empty portfolio with zero realized profit
         PortfolioService.savePortfolio(name, []);
+        PortfolioService.saveRealizedProfit(name, 0);
+
         // Add to state
         commit("ADD_PORTFOLIO_NAME", name);
         commit("SET_SELECTED_PORTFOLIO", name);
         commit("SET_PORTFOLIO", []);
+        commit("SET_REALIZED_PROFIT", 0);
       } else {
         alert("Portfolio name already exists or is invalid.");
       }
@@ -197,17 +208,18 @@ export default {
       const updatedPortfolio = [...state.portfolio];
       updatedPortfolio[index].shares -= sharesToSell;
 
-      // If all shares sold, remove the entry
       if (updatedPortfolio[index].shares === 0) {
         updatedPortfolio.splice(index, 1);
       }
 
-      // Save to service
+      // Persist updated portfolio and realized profit
+      const updatedRealizedProfit = state.realizedProfit + profitDelta;
       PortfolioService.savePortfolio(state.selectedPortfolio, updatedPortfolio);
-      commit("SET_PORTFOLIO", updatedPortfolio);
+      PortfolioService.saveRealizedProfit(state.selectedPortfolio, updatedRealizedProfit);
 
-      // Update realizedProfit in the store
-      commit("SET_REALIZED_PROFIT", state.realizedProfit + profitDelta);
+      // Commit changes to state
+      commit("SET_PORTFOLIO", updatedPortfolio);
+      commit("SET_REALIZED_PROFIT", updatedRealizedProfit);
     },
 
     async updateCurrentPrice({ state, commit }, { symbol, index }) {

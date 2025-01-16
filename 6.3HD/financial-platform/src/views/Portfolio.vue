@@ -9,8 +9,8 @@
           <label for="portfolio-select">Select Portfolio:</label>
           <select
             id="portfolio-select"
-            v-model="selectedPortfolio"
-            @change="loadPortfolio"
+            :value="selectedPortfolio"
+            @change="onPortfolioChange"
           >
             <option v-for="name in portfolioNames" :key="name" :value="name">
               {{ name }}
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters  } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import SearchBar from "@/components/SearchBar.vue";
 import PortfolioTable from "@/components/PortfolioTable.vue";
 
@@ -101,19 +101,16 @@ export default {
       "realizedProfit",
     ]),
     ...mapGetters("portfolio", ["totalPortfolioValue"]),
-
   },
   created() {
-    // Load portfolio names from the store
-    this.loadPortfolioNames();
-    // Automatically select first portfolio if any
-    if (this.portfolioNames.length > 0) {
-      this.setSelectedPortfolio(this.portfolioNames[0]);
-      this.loadPortfolio();
-    }
+    this.loadPortfolioNames().then(() => {
+      if (this.portfolioNames.length > 0 && !this.selectedPortfolio) {
+        this.setSelectedPortfolio(this.portfolioNames[0]);
+        this.loadPortfolio();
+      }
+    });
   },
   methods: {
-    // Map store actions
     ...mapActions("portfolio", [
       "loadPortfolioNames",
       "loadPortfolio",
@@ -125,7 +122,12 @@ export default {
       "setSelectedPortfolio",
     ]),
 
-    // Because we need a prompt for creating a new portfolio
+    onPortfolioChange(event) {
+      const portfolioName = event.target.value;
+      this.setSelectedPortfolio(portfolioName);
+      this.loadPortfolio();
+    },
+
     createPortfolioPrompt() {
       const name = prompt("Enter a name for the new portfolio:");
       this.createPortfolio(name);

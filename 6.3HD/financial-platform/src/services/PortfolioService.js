@@ -23,17 +23,20 @@ const PortfolioService = {
    */
   getPortfolio(name) {
     const portfolios = this.getAllPortfolios();
-    return portfolios[name] || [];
+    return portfolios[name]?.entries || []; // Only return the portfolio entries
   },
 
   /**
-   * Save a specific portfolio by name.
+   * Save a specific portfolio by name, including its realized profit.
    * @param {string} name - The name of the portfolio.
    * @param {Array} portfolio - The portfolio entries to save.
    */
   savePortfolio(name, portfolio) {
     const portfolios = this.getAllPortfolios();
-    portfolios[name] = portfolio;
+    if (!portfolios[name]) {
+      portfolios[name] = { entries: [], realizedProfit: 0 };
+    }
+    portfolios[name].entries = portfolio; // Save portfolio entries
     this.saveAllPortfolios(portfolios);
   },
 
@@ -45,6 +48,30 @@ const PortfolioService = {
     const portfolios = this.getAllPortfolios();
     delete portfolios[name];
     this.saveAllPortfolios(portfolios);
+  },
+
+  /**
+   * Save the realized profit for a specific portfolio.
+   * @param {string} portfolioName - The name of the portfolio.
+   * @param {number} realizedProfit - The realized profit to save.
+   */
+  saveRealizedProfit(portfolioName, realizedProfit) {
+    const portfolios = this.getAllPortfolios();
+    if (!portfolios[portfolioName]) {
+      portfolios[portfolioName] = { entries: [], realizedProfit: 0 };
+    }
+    portfolios[portfolioName].realizedProfit = realizedProfit; // Save realized profit
+    this.saveAllPortfolios(portfolios);
+  },
+
+  /**
+   * Retrieve the realized profit for a specific portfolio.
+   * @param {string} portfolioName - The name of the portfolio.
+   * @returns {number} The realized profit or 0 if not found.
+   */
+  getRealizedProfit(portfolioName) {
+    const portfolios = this.getAllPortfolios();
+    return portfolios[portfolioName]?.realizedProfit || 0;
   },
 };
 
