@@ -20,7 +20,7 @@ export default {
       sortDirection: "asc",
       /**
        * chartDataMap is an object keyed by symbol
-       * Example: { "TSCO.LON": [ { date, open, high, low, close, volume }, ... ] }
+       * { "Ticker": [ { date, open, high, low, close, volume }, ... ] }
        */
       chartDataMap: {},
     };
@@ -62,7 +62,7 @@ export default {
     },
 
     /**
-     * Calculate a user's unrealized gain/loss.
+     * Calculate a unrealized gain/loss.
      */
     calculateGainLoss(entry) {
       if (!entry.currentPrice) return "Loading...";
@@ -80,7 +80,7 @@ export default {
 
     /**
      * Show/hide the chart row for a given symbol.
-     * If we have no data, fetch from StockService, parse with TimeSeriesDailyModel.
+     * If have no data, fetch from StockService, parse with TimeSeriesDailyModel.
      */
     async toggleChart(symbol) {
       if (this.chartDataMap[symbol]) {

@@ -137,9 +137,9 @@ margin-bottom: 1rem; /* spacing below the container */
 
 /* Group label and select together */
 .portfolio-select-group {
-display: flex;
-align-items: center;
-gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .portfolio-select-group label {
@@ -149,31 +149,31 @@ color: #333;
 
 /* Style the dropdown */
 .portfolio-select-group select {
-padding: 6px 8px;
-border: 1px solid #ccc;
-border-radius: 4px;
-font-size: 0.9rem;
-cursor: pointer;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
 }
 
 /* Keep the buttons in another flex container if you want them side by side */
 .portfolio-buttons {
-display: flex;
-gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
 /* Button styling (consistent with the rest of your app) */
 .portfolio-management button {
-background-color: #007bff;
-color: #fff;
-border: none;
-border-radius: 4px;
-padding: 6px 12px;
-cursor: pointer;
-font-size: 0.9rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
 }
 
 .portfolio-management button:hover {
-background-color: #0056b3;
+    background-color: #0056b3;
 }
   

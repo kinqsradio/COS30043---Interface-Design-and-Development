@@ -1,6 +1,13 @@
 <template>
+  <div>
+    <!-- Navbar Component -->
+    <Navbar />
+  </div>
+
   <div class="portfolio">
-    <h1>Portfolio Management</h1>
+    <!-- Header Component -->
+    <Header title="Portfolio Management" subtitle="Manage your investments with ease"></Header>
+
 
     <!-- Top row: Portfolio management & Search bar -->
     <div class="portfolio-top-row">
@@ -84,11 +91,15 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import SearchBar from "@/components/SearchBar.vue";
+import Navbar from "@/components/Navbar.vue";
+import Header from "@/components/Header.vue";
 import PortfolioTable from "@/components/PortfolioTable.vue";
 
 export default {
   name: "PortfolioPage",
   components: {
+    Navbar,
+    Header,
     SearchBar,
     PortfolioTable,
   },

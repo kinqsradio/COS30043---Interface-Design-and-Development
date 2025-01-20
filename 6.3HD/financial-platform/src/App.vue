@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view /> <!-- This will load the appropriate view based on the route -->
+    <router-view />
   </div>
 </template>
 
@@ -17,6 +17,16 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 0;
+}
+
+/* Hide scrollbar but allow mouse and trackpad scrolling */
+html, body {
+  overflow: auto; 
+  scrollbar-width: none; 
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
 }
 </style>

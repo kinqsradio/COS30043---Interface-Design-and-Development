@@ -1,0 +1,58 @@
+.search-bar {
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* Container holding icon + input */
+  .search-bar-container {
+    display: flex;
+    flex: 1; 
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0 10px; 
+  }
+  
+  /* The magnifying glass icon */
+  .search-icon {
+    width: 16px;
+    height: 16px;
+    color: #888; /* lighten if desired */
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  
+  /* The input field */
+  .search-input {
+    flex: 1;
+    padding: 10px 0; 
+    border: none;
+    font-size: 16px;
+    outline: none; 
+    background-color: transparent;
+  }
+  
+  /* Highlight input on focus */
+  .search-input:focus {
+    border: none;
+    outline: none;
+  }
+  
+  /* Search button */
+  .search-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .search-button:hover {
+    background-color: #0056b3;
+  }

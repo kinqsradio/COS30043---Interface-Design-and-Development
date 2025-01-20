@@ -1,40 +1,53 @@
 <template>
-  <div class="container py-4">
-    <h1 class="text-center mb-4">Market Overview</h1>
+  <div>
+    <!-- Navbar Component -->
+    <Navbar />
+  </div>
 
-    <!-- Category Selection Buttons -->
-    <div class="d-flex justify-content-center flex-wrap mb-4">
+  <div class="container py-4">
+    <!-- Header Component -->
+    <Header title="Market Overview" subtitle="Explore market categories and statistics"></Header>
+
+    <!-- Top Row: Category Selection Buttons -->
+    <div class="dashboard-top-row">
       <button
         v-for="category in categories"
         :key="category.key"
         @click="selectCategory(category.key)"
-        :class="['btn', 'btn-lg', 'me-2', 'mb-2', selectedCategory === category.key ? 'btn-primary' : 'btn-outline-primary']"
+        :class="['btn', selectedCategory === category.key ? 'btn-primary' : 'btn-outline-primary']"
       >
         {{ category.label }}
       </button>
     </div>
 
     <!-- Data Table -->
-    <div class="table-responsive">
-      <dashboard-stats
-        v-if="selectedData.length"
-        :data="selectedData"
-        :defaultSortKey="getDefaultSortKey"
-        :defaultSortDir="'desc'"
-      />
+    <div>
+      <div class="table-responsive">
+        <dashboard-stats
+          v-if="selectedData.length"
+          :data="selectedData"
+          :defaultSortKey="getDefaultSortKey"
+          :defaultSortDir="'desc'"
+        />
 
-      <p v-else class="text-center text-muted">Loading data...</p>
+        <p v-else class="text-center text-muted">Loading data...</p>
+      </div>
     </div>
   </div>
 </template>
 
+
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+import Navbar from "@/components/Navbar.vue";
+import Header from "@/components/Header.vue";
 import DashboardStats from "@/components/DashboardStats.vue";
 
 export default {
   name: "DashboardPage",
   components: {
+    Navbar,
+    Header,
     DashboardStats,
   },
   data() {

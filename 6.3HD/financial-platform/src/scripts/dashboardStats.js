@@ -1,6 +1,6 @@
 import { sortData } from "@/scripts/tableSorting.js";
 import StockChart from "@/components/StockChart.vue";
-import StockService from "@/services/StockService"; // or your actual path
+import StockService from "@/services/StockService";
 
 export default {
   name: "DashboardStats",
@@ -25,7 +25,7 @@ export default {
     return {
       currentSort: this.defaultSortKey,
       currentSortDir: this.defaultSortDir,
-      // Holds chart data for each ticker, e.g. { "AAPL": [{date, close,...}], ... }
+      // Holds chart data for each ticker, { "Ticker": [{date, close,...}], ... }
       chartDataMap: {},
     };
   },
@@ -65,9 +65,8 @@ export default {
         delete this.chartDataMap[ticker];
       } else {
         try {
-          // Example: fetch time series daily from your backend or Alpha Vantage
+          // Fetch time series daily from Alpha Vantage
           const data = await StockService.getDailyData(ticker);
-          // Assign so Vue's reactivity sees the new property
           this.chartDataMap[ticker] = data.timeSeries;
         } catch (error) {
           console.error("Error fetching time series for", ticker, error);

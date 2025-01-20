@@ -23,56 +23,6 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### Folder Structure
-
-```
-src/
-├── assets/                 # Static assets like images, icons, etc.
-│   └── logo.png
-├── components/             # Reusable UI components
-│   ├── AddPortfolioForm.vue   # Form for adding portfolio entries
-│   ├── BaseChart.vue          # Base component for rendering charts
-│   ├── DashboardStats.vue     # Stats card for dashboard
-│   ├── PriceCard.vue          # Price display card
-│   ├── PortfolioTable.vue     # Table for displaying portfolio data
-│   └── SearchBar.vue          # Search bar for finding stocks
-├── layouts/               # Page layouts (optional)
-│   └── DefaultLayout.vue      # Layout wrapper for all pages
-├── router/                # Vue Router configuration
-│   └── index.js               # Routing for all pages
-├── scripts/                
-│   └── tableSorting.js               # Sort DashboardStats stock tables
-├── services/              # Logic for local storage and APIs
-│   ├── ApiService.js          # Fetch data from APIs (e.g., Alpha Vantage)
-│   ├── PortfolioService.js    # Manage portfolio in Local Storage
-│   ├── SearchService.js       # Handle search functionality
-│   └── StockService.js         # Stock data (e.g., intraday) API logic
-├── models/              # Models for API response
-│   ├── GlobalQuoteModel.js          
-│   ├── SymbolSearchModel.js    
-│   ├── TimeSeriesDailyModel.js       
-│   └── TopGainersLosersModels.js         
-│
-├── store/                 # Vuex state management
-│   ├── index.js              # Vuex store setup
-│   └── modules/              # Modular Vuex store
-│       ├── dashboard.js        # Dashboard-specific state
-│       ├── portfolio.js        # Portfolio-specific state
-│       └── search.js           # Search-specific state
-├── views/                 # Page-level components
-│   ├── Dashboard.vue          # Main dashboard view
-│   ├── Portfolio.vue          # Portfolio view
-│   ├── Search.vue             # Search view
-│   └── Charts.vue             # Charts and trend analysis view
-├── App.vue                # Main Vue application component
-├── main.js                # Application entry point
-└── styles/                # Global CSS/SCSS styles
-    ├── global.css            # General styles
-    ├── dashboard.css            
-    ├── tables.css            
-    └── variables.css         # CSS variables for theming
-```
-
 ### Endpoints
 
 | **Endpoint**             | **Function**                          | **Purpose**                                                                                      | **Used In**               |

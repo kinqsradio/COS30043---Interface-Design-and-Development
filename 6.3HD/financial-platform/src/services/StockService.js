@@ -5,6 +5,7 @@ import SymbolSearchModel from '@/models/SymbolSearchModel';
 import TopGainersLosersModel from '@/models/TopGainersLosersModel';
 
 const API_KEY = 'B5X8ZE7X305K32L3';
+// 'demo'
 // 'B5X8ZE7X305K32L3'
 // 'OO1L6GN27CG5A9H0';
 
@@ -12,7 +13,7 @@ const StockService = {
   /**
    * Fetch daily time series data.
    *
-   * @param {string} symbol - The stock symbol (e.g., "IBM").
+   * @param {string} symbol - The stock symbol.
    * @param {object} options - Optional parameters: outputsize, datatype.
    * @returns {Promise<TimeSeriesDailyModel>} - A promise resolving to a structured daily time series data.
    */
@@ -37,7 +38,7 @@ const StockService = {
   /**
    * Fetch the latest stock quote.
    *
-   * @param {string} symbol - The stock symbol (e.g., "IBM").
+   * @param {string} symbol - The stock symbol.
    * @param {object} options - Optional parameters: datatype.
    * @returns {Promise<GlobalQuoteModel>} - A promise resolving to a structured global quote data.
    */
@@ -62,7 +63,7 @@ const StockService = {
   /**
    * Search for stocks or companies by keyword.
    *
-   * @param {string} keywords - The search keyword (e.g., "microsoft").
+   * @param {string} keywords - The search keyword.
    * @param {object} options - Optional parameters: datatype.
    * @returns {Promise<SymbolSearchModel>} - A promise resolving to structured search results.
    */
