@@ -109,19 +109,23 @@ margin-bottom: 8px;
 .search-details {
 display: flex;
 flex-direction: column;
+align-items: flex-start; 
 }
 
 /* Symbol stands out more */
 .search-symbol {
+text-align: left; 
 font-weight: bold;
 margin-bottom: 4px;
 }
 
 /* Slightly smaller or lighter color for the name */
 .search-company {
+text-align: left; 
 color: #666;
 font-size: 0.9em;
 }
+  
 
 /* Portfolio Management Container */
 .portfolio-management {
@@ -156,13 +160,13 @@ color: #333;
     cursor: pointer;
 }
 
-/* Keep the buttons in another flex container if you want them side by side */
+/* Keep the buttons in another flex container */
 .portfolio-buttons {
     display: flex;
     gap: 10px;
 }
 
-/* Button styling (consistent with the rest of your app) */
+/* Button styling */
 .portfolio-management button {
     background-color: #007bff;
     color: #fff;
