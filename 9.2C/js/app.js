@@ -1,18 +1,9 @@
+// NOTE:
+// THE CODE IS WORKING BUT IF RUNNING LOCALLY YOU MAY WANT TO HAVE A LOCAL SERVER RUNNING
+// http://localhost:8000/php/api.php?action=login IS AN EXAMPLE OF THE URL THAT NEEDS TO BE ACCESSED
+// TO RUN THE CODE LOCALLY YOU CAN USE PHP'S BUILT IN SERVER BY RUNNING THE COMMAND php -S localhost:8000
 // Shared State for Units
 let globalUnits = [];
-
-// Load units.json dynamically
-fetch('./js/9.2 units.json')
-    .then(response => response.json())
-    .then(data => {
-        globalUnits = data;
-    })
-    .catch(error => console.error('Error fetching units:', error));
-
-// Hardcoded credentials
-const users = [
-    { username: 'admin', password: 'password' }
-];
 
 // Login Component
 const Login = {
@@ -41,15 +32,24 @@ const Login = {
         };
     },
     methods: {
-        login() {
-            const user = users.find(
-                u => u.username === this.username && u.password === this.password
-            );
+        async login() {
+            try {
+                const response = await fetch('./php/api.php?action=login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: this.username, password: this.password })
+                });
 
-            if (user) {
-                this.$router.push('/dashboard');
-            } else {
-                this.errorMessage = 'Invalid username or password';
+                const result = await response.json();
+
+                if (result.success) {
+                    this.$router.push('/dashboard');
+                } else {
+                    this.errorMessage = result.message;
+                }
+            } catch (error) {
+                this.errorMessage = 'An error occurred while logging in.';
+                console.error(error);
             }
         }
     }
@@ -59,7 +59,7 @@ const Login = {
 const ViewUnits = {
     data() {
         return {
-            units: globalUnits,
+            units: [],
             currentPage: 1,
             perPage: 5
         };
@@ -75,6 +75,16 @@ const ViewUnits = {
         }
     },
     methods: {
+        async fetchUnits() {
+            try {
+                const response = await fetch('./php/api.php?action=getUnits', {
+                    method: 'POST'
+                });
+                this.units = await response.json();
+            } catch (error) {
+                console.error('Error fetching units:', error);
+            }
+        },
         nextPage() {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
@@ -85,6 +95,9 @@ const ViewUnits = {
                 this.currentPage--;
             }
         }
+    },
+    created() {
+        this.fetchUnits();
     },
     template: `
         <div>
@@ -101,8 +114,8 @@ const ViewUnits = {
                 <tbody>
                     <tr v-for="unit in paginatedUnits" :key="unit.code">
                         <td>{{ unit.code }}</td>
-                        <td>{{ unit.desc }}</td>
-                        <td>{{ unit.cp }}</td>
+                        <td>{{ unit.description }}</td>
+                        <td>{{ unit.credit_points }}</td>
                         <td>{{ unit.type }}</td>
                     </tr>
                 </tbody>
@@ -128,23 +141,25 @@ const InsertUnit = {
     methods: {
         async insertUnit() {
             try {
-                globalUnits.push({ ...this.unit });
-                this.message = 'Unit added and saved successfully';
-                this.messageType = 'success';
-                this.unit = { code: '', desc: '', cp: '', type: '' };
-                
-                // Here you would typically make an API call to your backend
-                // For example:
-                // await fetch('/api/units', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify(this.unit)
-                // });
-                
+                const response = await fetch('./php/api.php?action=addUnit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(this.unit)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    this.message = result.message;
+                    this.messageType = 'success';
+                    this.unit = { code: '', desc: '', cp: '', type: '' };
+                } else {
+                    this.message = result.message;
+                    this.messageType = 'danger';
+                }
             } catch (error) {
-                this.message = 'Error saving unit';
+                this.message = 'Error saving unit.';
                 this.messageType = 'danger';
-                console.error('Error saving unit:', error);
+                console.error(error);
             }
         }
     },
@@ -189,27 +204,25 @@ const DeleteUnit = {
     methods: {
         async deleteUnit() {
             try {
-                const index = globalUnits.findIndex(u => u.code === this.unitCode);
-                if (index !== -1) {
-                    globalUnits.splice(index, 1);
-                    this.message = 'Unit deleted and saved successfully';
+                const response = await fetch('./php/api.php?action=deleteUnit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: this.unitCode })
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    this.message = result.message;
                     this.messageType = 'success';
                     this.unitCode = '';
-                    
-                    // Here you would typically make an API call to your backend
-                    // For example:
-                    // await fetch(`/api/units/${this.unitCode}`, {
-                    //     method: 'DELETE'
-                    // });
-                    
                 } else {
-                    this.message = 'Unit not found';
-                    this.messageType = 'warning';
+                    this.message = result.message;
+                    this.messageType = 'danger';
                 }
             } catch (error) {
-                this.message = 'Error deleting unit';
+                this.message = 'Error deleting unit.';
                 this.messageType = 'danger';
-                console.error('Error deleting unit:', error);
+                console.error(error);
             }
         }
     },
