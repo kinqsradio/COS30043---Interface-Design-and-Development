@@ -5,7 +5,9 @@ const PortfolioService = {
    */
   getAllPortfolios() {
     const portfolios = localStorage.getItem("allPortfolios");
-    return portfolios ? JSON.parse(portfolios) : {};
+    const parsedPortfolios = portfolios ? JSON.parse(portfolios) : {};
+    console.log("Retrieved All Portfolios:", parsedPortfolios);
+    return parsedPortfolios;
   },
 
   /**
@@ -13,6 +15,7 @@ const PortfolioService = {
    * @param {Object} portfolios - Object containing all portfolios.
    */
   saveAllPortfolios(portfolios) {
+    console.log("Saving All Portfolios:", portfolios);
     localStorage.setItem("allPortfolios", JSON.stringify(portfolios));
   },
 
@@ -23,6 +26,7 @@ const PortfolioService = {
    */
   getPortfolio(name) {
     const portfolios = this.getAllPortfolios();
+    console.log(`Retrieved Portfolio for "${name}":`, portfolios[name]?.entries || []);
     return portfolios[name]?.entries || []; // Only return the portfolio entries
   },
 
@@ -37,6 +41,7 @@ const PortfolioService = {
       portfolios[name] = { entries: [], realizedProfit: 0 };
     }
     portfolios[name].entries = portfolio; // Save portfolio entries
+    console.log(`Saving Portfolio "${name}":`, portfolios[name]);
     this.saveAllPortfolios(portfolios);
   },
 
@@ -47,6 +52,7 @@ const PortfolioService = {
   deletePortfolio(name) {
     const portfolios = this.getAllPortfolios();
     delete portfolios[name];
+    console.log(`Delete Portfolio "${name}":`, portfolios[name]);
     this.saveAllPortfolios(portfolios);
   },
 
@@ -62,6 +68,7 @@ const PortfolioService = {
     }
     portfolios[portfolioName].realizedProfit = realizedProfit; // Save realized profit
     this.saveAllPortfolios(portfolios);
+    console.log(`Successfully saved realized profit for "${portfolioName}":`, portfolios[portfolioName].realizedProfit);
   },
 
   /**
@@ -71,6 +78,7 @@ const PortfolioService = {
    */
   getRealizedProfit(portfolioName) {
     const portfolios = this.getAllPortfolios();
+    console.log(`Retrieved realized profit for "${portfolioName}":`, portfolios[portfolioName].realizedProfit);
     return portfolios[portfolioName]?.realizedProfit || 0;
   },
 };

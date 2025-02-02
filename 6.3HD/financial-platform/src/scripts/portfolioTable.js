@@ -89,7 +89,7 @@ export default {
       } else {
         try {
           const data = await StockService.getDailyData(symbol);
-          // Direct assignment is fine in Vue 3 (no more this.$set)
+          console.log(`Received time series data for: ${symbol}`, data);
           this.chartDataMap[symbol] = data.timeSeries;
         } catch (error) {
           console.error("Error fetching time series for", symbol, error);

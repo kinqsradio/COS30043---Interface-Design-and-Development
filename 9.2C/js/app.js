@@ -34,7 +34,7 @@ const Login = {
     methods: {
         async login() {
             try {
-                const response = await fetch('./php/api.php?action=login', {
+                const response = await fetch('http://localhost:8000/php/api.php?action=login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: this.username, password: this.password })
@@ -77,7 +77,7 @@ const ViewUnits = {
     methods: {
         async fetchUnits() {
             try {
-                const response = await fetch('./php/api.php?action=getUnits', {
+                const response = await fetch('http://localhost:8000/php/api.php?action=getUnits', {
                     method: 'POST'
                 });
                 this.units = await response.json();
@@ -141,7 +141,7 @@ const InsertUnit = {
     methods: {
         async insertUnit() {
             try {
-                const response = await fetch('./php/api.php?action=addUnit', {
+                const response = await fetch('http://localhost:8000/php/api.php?action=addUnit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(this.unit)
@@ -204,7 +204,7 @@ const DeleteUnit = {
     methods: {
         async deleteUnit() {
             try {
-                const response = await fetch('./php/api.php?action=deleteUnit', {
+                const response = await fetch('http://localhost:8000/php/api.php?action=deleteUnit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ code: this.unitCode })

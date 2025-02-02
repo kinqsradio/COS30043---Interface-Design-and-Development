@@ -60,6 +60,7 @@ export default {
      */
     loadPortfolioNames({ commit }) {
       const allPortfolios = PortfolioService.getAllPortfolios();
+      console.log("Loaded Portfolio Names:", Object.keys(allPortfolios));
       commit("SET_PORTFOLIO_NAMES", Object.keys(allPortfolios));
     },
 
@@ -80,6 +81,7 @@ export default {
     
       // Update current price for each entry
       portfolioEntries.forEach((entry, index) => {
+        console.log(`Updating current price for ${entry.symbol}`);
         dispatch("updateCurrentPrice", { symbol: entry.symbol, index });
       });
     },
@@ -131,6 +133,7 @@ export default {
     async handleSearch({ commit }, query) {
       try {
         const results = await StockService.searchStocks(query);
+        console.log("Search results received:", results.bestMatches);
         commit("SET_SEARCH_RESULTS", results.bestMatches);
       } catch (error) {
         console.error("Error fetching search results:", error);
@@ -162,6 +165,12 @@ export default {
         existingEntry.price = totalCost / totalShares;
       } else {
         updatedPortfolio.push({
+          symbol: stock.symbol,
+          price: purchasePrice,
+          shares,
+          currentPrice: null,
+        });
+        console.log(`Added new stock entry for ${stock.symbol}:`, {
           symbol: stock.symbol,
           price: purchasePrice,
           shares,
@@ -203,6 +212,8 @@ export default {
       const sellValue = sharesToSell * entry.currentPrice;
       const costOfSharesToSell = sharesToSell * entry.price;
       const profitDelta = sellValue - costOfSharesToSell;
+
+      console.log(`Sold ${sharesToSell} shares of ${entry.symbol}, Profit: $${profitDelta.toFixed(2)}`);
 
       // Update the portfolio
       const updatedPortfolio = [...state.portfolio];

@@ -19,4 +19,3 @@ class SymbolSearchModel {
   }
   
   module.exports = SymbolSearchModel;
-  
